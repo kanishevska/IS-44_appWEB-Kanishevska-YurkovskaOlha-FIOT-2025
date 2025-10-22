@@ -46,10 +46,26 @@ table {
   margin-top: 2%;
 }
 
-.animal {
+/*.animal {
   text-align: center;
   width: 45%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2%;
+  margin-top: 2%;
+}*/
+
+.animal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 45%;
+  gap: 1em;
+  margin-top: 2%;
 }
+
 
 .animal img {
   max-width: 100%;
@@ -78,7 +94,7 @@ header {
 
 .burger {
   display: none;
-  font-size: 2rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -122,3 +138,169 @@ header {
     gap: 1rem;
   }
 }
+
+
+.animaltitle {
+  background-color: #A1CACE;
+  border: 2px solid #A1CACE;
+  border-radius: 12px;
+  padding: 1% 2%;
+  margin: 0 0;
+  text-align: center;
+}
+
+.age {
+  background-color: #A1CACE;
+  border: 2px solid #A1CACE;
+  border-radius: 15px;
+  padding: 1% 2%;
+  margin: 0 0;
+  text-align: center;
+  width: 70%;
+}
+
+.health {
+  height: 50%;
+}
+
+.like {
+  width: 70%;
+  background-color: #CEA1A2;
+  border: 2px solid #CEA1A2;
+  border-radius: 12px;
+  padding: 1% 2%;
+  margin: 0% 15%;
+  text-align: center;
+}
+.like:hover{
+  width: 70%;
+  background-color: #8F2D2F;
+  border-color: #8F2D2F;
+  color: #EFCCCD;
+  transition: 0.3s;
+}
+
+.adoptbutton {
+  width: 70%;
+  background-color: #B6CEA1;
+  border: 2px solid #B6CEA1;
+  border-radius: 12px;
+  padding: 1% 2%;
+  margin: 0% 15%;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+}
+.adoptbutton:hover{
+  width: 70%;
+  background-color: #6A3C05;
+  border-color: #6A3C05;
+  color: #B6CEA1;
+  transition: 0.3s;
+}
+
+
+
+/*ФОРМА*/
+form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 2rem auto;
+  font-size: 1.2rem;
+}
+
+form p {
+  margin: 1.2rem 0 0.5rem;
+  font-weight: 600;
+}
+
+form input[type="text"],
+form input[type="date"],
+form input[type="tel"],
+form input[type="email"],
+form input[type="username"],
+form input[type="password"],
+form select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 2px solid #B6CEA1;
+  border-radius: 10px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+form input[type="text"]:focus,
+form input[type="date"]:focus,
+form input[type="tel"]:focus,
+form input[type="email"]:focus,
+form input[type="username"]:focus,
+form input[type="password"]:focus,
+form select:focus {
+  outline: none;
+  border-color: #6A3C05;
+  background-color: #fff;
+}
+
+form label {
+  display: block;
+  margin: 0.4rem 0;
+  font-weight: 500;
+}
+
+form input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+form input[type="submit"] {
+  margin-top: 1.5rem;
+  padding: 0.8rem 2rem;
+  background-color: #B6CEA1;
+  border: 2px solid #B6CEA1;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+  background-color: #6A3C05;
+  border-color: #6A3C05;
+  color: #fff;
+}
+
+/*Галерея*/
+.photo-scroll-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      scroll-behavior: smooth;
+      padding-bottom: 10px;
+    }
+
+    .photo-scroll-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .photo-scroll-container::-webkit-scrollbar-thumb {
+      background:none;
+    }
+
+    .photo-item {
+      flex: 0 0 calc(33.33% - 16px); /* 3 фото в ряд з відступами */
+      max-width: calc(33.33% - 16px);
+      background-color: none;
+      overflow: hidden;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }

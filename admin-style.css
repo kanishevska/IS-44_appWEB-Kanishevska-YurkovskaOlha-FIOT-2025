@@ -1,0 +1,175 @@
+body {
+  font-family: 'Sofia Sans Semi Condensed', sans-serif;
+  margin: 0;
+  background-color: #FDF8F8;
+}
+
+header {
+  background-color: white;
+  padding: 1rem 2%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid #CEA1A2;
+}
+
+.logo {
+  height: 40px;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #8F2D2F;
+  font-weight: 600;
+}
+
+main {
+  padding: 2rem 5%;
+}
+
+h1 {
+  text-align: center;
+  color: #8F2D2F;
+  margin-bottom: 2rem;
+}
+
+section {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+section h2 {
+  background-color: #F4DADB;
+  padding: 0.8rem;
+  border-radius: 8px;
+  color: #4A1C1E;
+  text-align: center;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  margin: 0.5rem 0 1rem;
+  border: 2px solid #CEA1A2;
+  border-radius: 10px;
+  background-color: #fdfcfc;
+  font-size: 1rem;
+}
+
+form input[type="submit"] {
+  background-color: #CEA1A2;
+  color: #4A1C1E;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+}
+
+form input[type="submit"]:hover {
+  background-color: #8F2D2F;
+  color: white;
+}
+
+.animal-card {
+  border: 2px solid #CEA1A2;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #FFF6F6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.animal-card-details {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+.animal-card img {
+  width: 120px;
+  border-radius: 10px;
+}
+
+.card-actions {
+  margin-top: 1rem;
+}
+
+.card-actions button {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #CEA1A2;
+  color: #4A1C1E;
+  transition: 0.3s;
+}
+
+.card-actions button:hover {
+  background-color: #8F2D2F;
+  color: white;
+}
+
+.adoption-request {
+  border: 2px solid #CEA1A2;
+  border-radius: 12px;
+  background-color: #fff4f5;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.adoption-request h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+  color: #8F2D2F;
+}
+
+.adoption-request p {
+  margin: 0.3rem 0;
+}
+
+.request-actions button {
+  background-color: #CEA1A2;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: 0.3s;
+  color: #4A1C1E;
+}
+
+.request-actions button:hover {
+  background-color: #8F2D2F;
+  color: white;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 1rem;
+  color: #4A1C1E;
+}
+
+@media (max-width: 768px) {
+  .animal-card-details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

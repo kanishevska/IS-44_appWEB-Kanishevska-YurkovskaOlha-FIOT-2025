@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Всиновлення</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Semi+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="images/logo.png" alt="logo" class="logo" width="3%" height="3%">
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="burger">☰</label>
+
+
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">На головну</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Анкета для всиновлення</h2>
+        <form>
+            <p>ПІБ</p>
+            <input type="text" name="name">
+            <p>Дата народження</p>
+            <input type="date" name="birth date">
+            <p>Ім'я хвостика, якого плануєте всиновити</p>
+            <select name="pet name">
+                <option value="Mike">Майк</option>
+                <option value="Mila">Міла</option>
+                <option value="Ryzhyk">Рижик</option>
+                <option value="Snizhka">Сніжка</option>
+            </select>
+            <p>Контактний номер телефону</p>
+            <input type="tel">
+            <p>Місто, в якому проживаєте</p>
+            <input type="text" name="city">
+            <p>Чи був у Вас раніше досвід догляду за тваринами?</p>
+            <label><input type="radio" name="expiriece" value="Yes">Так</label>
+            <label><input type="radio" name="expiriece" value="No">Ні</label>
+            <p>Скільки часу на день тварина проводитиме на самоті?</p>
+            <label><input type="radio" name="timealone" value="2">До 2 год</label><br>
+            <label><input type="radio" name="timealone" value="2-6">2-6 годин</label><br>
+            <label><input type="radio" name="timealone" value="6-10">6-10 годин</label><br>
+            <label><input type="radio" name="timealone" value="10+">Більше 10 годин</label><br><br>
+            <p>Після надсилання анкети очікуйте дзвінок від працівника притулку протягом 3 робочих днів.</p>
+            <p>Натискаючи кнопку "Надіслати" Ви погоджуєтесь на обробку ваших даних працівниками притулку.</p>
+            <input type="submit" value="Надіслати">
+        </form>
+    </main>
+    <footer>
+        <div class="contacts">
+            <h3>Контакти</h3>
+            <p>Контактні номери телефонів:<br>+380998853614<br>+380998853614<br>+380998853614</p><br>
+        </div>
+
+        <div class="location">
+            <h3>Розташування</h3>
+            <p>м. Київ <br>вул. Київська, 1, павільйон 6</p>
+            <a href="https://maps.app.goo.gl/zvjNdy5TPF6ixKUy7">
+                <img src="images/map.png" alt="map" width="345" height="210">
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

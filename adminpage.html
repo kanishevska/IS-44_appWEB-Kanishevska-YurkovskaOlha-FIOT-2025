@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Адмін-панель</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Semi+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-style.css">
+</head>
+
+<body>
+  <header>
+    <img src="images/logo.png" alt="logo" class="logo" />
+    <nav class="nav">
+      <ul>
+        <li><a href="index.html">На головну</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Адмін-панель</h1>
+
+    <!-- Додати тваринку -->
+    <section>
+      <h2>➕ Додати нову тваринку</h2>
+      <form>
+        <input type="text" placeholder="Ім’я тварини" required>
+        <input type="text" placeholder="Вік" required>
+        <input type="text" placeholder="Порода" required>
+        <select required>
+          <option value="">Оберіть стать</option>
+          <option value="Дівчинка">Дівчинка</option>
+          <option value="Хлопчик">Хлопчик</option>
+        </select>
+        <textarea placeholder="Характер" rows="3" required></textarea>
+        <textarea placeholder="Стан здоров’я" rows="3" required></textarea>
+        <input type="text" placeholder="Посилання на фото (URL або локально)" required>
+        <input type="submit" value="Додати тваринку">
+      </form>
+    </section>
+
+    <!-- Картки тварин -->
+    <section>
+      <h2>🐾 Тварини в базі</h2>
+
+      <div class="animal-card">
+        <div class="animal-card-details">
+          <img src="images/jessy.png" alt="Джессі" />
+          <div>
+            <p><strong>Ім’я:</strong> Джессі</p>
+            <p><strong>Вік:</strong> 2,5 роки</p>
+            <p><strong>Порода:</strong> Лайка</p>
+            <p><strong>Стать:</strong> Дівчинка</p>
+            <p><strong>Характер:</strong> Ніжна, лагідна, трохи боязка. Любить прогулянки.</p>
+            <p><strong>Здоров’я:</strong> Всі щеплення, ветеринарний контроль пройдений</p>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button>Редагувати</button>
+          <button>Видалити</button>
+        </div>
+      </div>
+
+      <!-- Інші тварини… -->
+    </section>
+
+    <!-- Анкети на всиновлення -->
+    <section>
+      <h2>📩 Заявки на всиновлення</h2>
+
+      <div class="adoption-request">
+        <h3>Олена Кравченко</h3>
+        <p><strong>Дата народження:</strong> 1990-03-14</p>
+        <p><strong>Ім’я тварини:</strong> Джессі</p>
+        <p><strong>Місто:</strong> Київ</p>
+        <p><strong>Телефон:</strong> +380981234567</p>
+        <p><strong>Досвід з тваринами:</strong> Так</p>
+        <p><strong>Час самотності тварини:</strong> До 2 год</p>
+        <div class="request-actions">
+          <button>Позначити як оброблену</button>
+        </div>
+      </div>
+
+      <!-- Інші заявки… -->
+    </section>
+
+    <!-- Редагування секцій -->
+    <section>
+      <h2>✏️ Редагування секцій "Допомога" та "Волонтерство"</h2>
+      <form>
+        <label for="volunteer">Волонтерство</label>
+        <textarea id="volunteer" rows="6">Нам завжди потрібні руки та серця…</textarea>
+
+        <label for="help">Допомога</label>
+        <textarea id="help" rows="6">Наш притулок існує завдяки людям…</textarea>
+
+        <input type="submit" value="Зберегти зміни">
+      </form>
+    </section>
+  </main>
+</body>
+</html>
