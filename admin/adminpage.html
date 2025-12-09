@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Адмін-панель</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Semi+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-style.css">
+</head>
+
+<body>
+  <header>
+    <img src="/images/logo.png" alt="logo" class="logo" />
+    <nav class="nav">
+      <ul>
+        <li><a href="index.html">На головну</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Адмін-панель</h1>
+
+    <!-- Додати тваринку -->
+    <section>
+      <h2>➕ Додати нову тваринку</h2>
+      <form id="addAnimalForm">
+        <input name="Name" type="text" placeholder="Ім’я тварини" required>
+        <select name="Species" required>
+          <option value="">Оберіть вид</option>
+          <option value="Dog">Dog</option>
+          <option value="Cat">Cat</option>
+          <option value="Other">Other</option>
+        </select>
+        <input name="Age" type="text" placeholder="Вік" required>
+        <input name="Breed" type="text" placeholder="Порода" required>
+        <select name="Gender" required>
+          <option value="">Оберіть стать</option>
+          <option value="Дівчинка">Дівчинка</option>
+          <option value="Хлопчик">Хлопчик</option>
+        </select>
+        <textarea name="Description" placeholder="Характер" rows="3" required></textarea>
+        <textarea name="HealthStatus" placeholder="Стан здоров’я" rows="3" required></textarea>
+        <input name="ImageURL" type="text" placeholder="Посилання на фото (URL або локально)" required>
+        <input type="submit" value="Додати тваринку">
+      </form>
+    </section>
+
+    <!-- Картки тварин -->
+    <section id="animalsContainer">
+      <h2>🐾 Тварини в базі</h2>
+    </section>
+
+    <!-- Заявки -->
+    <section id="requestsContainer">
+      <h2>📩 Заявки на всиновлення</h2>
+    </section>
+
+    <!-- Редагування секцій -->
+    <section>
+      <h2>✏️ Редагування секцій "Допомога" та "Волонтерство"</h2>
+      <form id="sectionsForm">
+        <label for="volunteer">Волонтерство</label>
+        <textarea id="volunteer" rows="6"></textarea>
+
+        <label for="help">Допомога</label>
+        <textarea id="help" rows="6"></textarea>
+
+        <input type="submit" value="Зберегти зміни">
+      </form>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      async function loadAnimals() {
+        const container = document.getElementById("animalsContainer");
+        container.innerHTML = "<h2>🐾 Тварини в базі</h2><p>Завантаження...</p>";
+        try {
+          const res = await fetch("/api/animals");
+          const animals = await res.json();
+
+          if (!Array.isArray(animals)) {
+            container.innerHTML = "<p>Помилка отримання тварин</p>";
+            return;
+          }
+
+          let html = "<h2>🐾 Тварини в базі</h2>";
+          animals.forEach(a => {
+            html += `
+              <div class="animal-card">
+                <div class="animal-card-details">
+                  <img src="${
+                    a.ImageURL.startsWith('http')
+                      ? a.ImageURL
+                      : a.ImageURL.startsWith('/images/')
+                        ? a.ImageURL
+                        : a.ImageURL.startsWith('images/')
+                          ? '/' + a.ImageURL
+                          : '/images/' + a.ImageURL
+                  }" alt="${a.Name}">
+
+
+                  <div>
+                    <p><strong>Ім’я:</strong> ${a.Name}</p>
+                    <p><strong>Вік:</strong> ${a.Age || ''}</p>
+                    <p><strong>Порода:</strong> ${a.Breed || ''}</p>
+                    <p><strong>Вид:</strong> ${a.Species || ''}</p>
+                    <p><strong>Стать:</strong> ${a.Gender || ''}</p>
+                    <p><strong>Характер:</strong> ${a.Description || ''}</p>
+                    <p><strong>Здоров’я:</strong> ${a.HealthStatus || ''}</p>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button onclick="editAnimal(${a.AnimalID})">Редагувати</button>
+                  <button onclick="deleteAnimal(${a.AnimalID})">Видалити</button>
+                </div>
+              </div>
+            `;
+          });
+
+          container.innerHTML = html;
+        } catch (err) {
+          console.error(err);
+          container.innerHTML = "<p>Не вдалося завантажити тварин.</p>";
+        }
+      }
+      
+
+      async function loadRequests() {
+    const container = document.getElementById("requestsContainer");
+    container.innerHTML = "<h2>📩 Заявки на всиновлення</h2><p>Завантаження...</p>";
+
+    try {
+        const res = await fetch("/api/adoption");
+        let items = await res.json();
+
+        if (!Array.isArray(items)) {
+            container.innerHTML = "<p>Помилка отримання заявок</p>";
+            return;
+        }
+
+        // лишк заявки зі статусом New
+        items = items.filter(r => r.Status?.toLowerCase() === "new");
+
+        let html = "<h2>📩 Заявки на всиновлення</h2>";
+
+        if (items.length === 0) {
+            html += "<p>Немає нових заявок</p>";
+        }
+
+        items.forEach(r => {
+            html += `
+              <div class="adoption-request">
+                <h3>${r.FullName}</h3>
+                <p><strong>Дата народження:</strong> ${r.BirthDate || ''}</p>
+                <p><strong>Ім’я тварини:</strong> ${r.AnimalName || r.AnimalID}</p>
+                <p><strong>Місто:</strong> ${r.City || ''}</p>
+                <p><strong>Телефон:</strong> ${r.Phone || ''}</p>
+                <p><strong>Досвід:</strong> ${r.Experience || ''}</p>
+                <p><strong>Час самотності:</strong> ${r.TimeAlone || ''}</p>
+                <div class="request-actions">
+                  <button onclick="markDone(${r.RequestID})">Позначити як оброблену</button>
+                </div>
+              </div>
+            `;
+        });
+
+        container.innerHTML = html;
+
+    } catch (err) {
+        console.error(err);
+        container.innerHTML = "<p>Не вдалося завантажити заявки.</p>";
+    }
+}
+      async function loadSections() {
+        try {
+          const res = await fetch("/api/sections");
+          const data = await res.json();
+          document.querySelector("#volunteer").value = data.volunteer?.Content || "";
+          document.querySelector("#help").value = data.help?.Content || "";
+        } catch (err) {
+          console.error("Помилка завантаження секцій", err);
+        }
+      }
+
+      document.getElementById("addAnimalForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const payload = {
+          Name: form.Name.value,
+          Species: form.Species.value,
+          Age: form.Age.value,
+          Breed: form.Breed.value,
+          Gender: form.Gender.value,
+          Description: form.Description.value,
+          HealthStatus: form.HealthStatus.value,
+          ImageURL: form.ImageURL.value
+        };
+
+        try {
+          const res = await fetch("/api/animals", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          if (res.ok) {
+            alert("Тваринку додано");
+            form.reset();
+            loadAnimals();
+          } else {
+            const err = await res.json();
+            alert("Помилка: " + (err.message || res.statusText));
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Помилка при додаванні тварини");
+        }
+      });
+
+      document.getElementById("sectionsForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        try {
+          const res = await fetch("/api/sections", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              volunteer: document.querySelector("#volunteer").value,
+              help: document.querySelector("#help").value
+            })
+          });
+          if (res.ok) {
+            alert("Секції збережено");
+          } else {
+            alert("Помилка збереження секцій");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Помилка збереження секцій");
+        }
+      });
+
+      window.deleteAnimal = async function (id) {
+        if (!confirm("Видалити тварину?")) return;
+        try {
+          const res = await fetch("/api/animals/" + id, { method: "DELETE" });
+          if (res.ok) {
+            alert("Тварину видалено");
+            loadAnimals();
+          } else {
+            alert("Помилка видалення");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Помилка при видаленні");
+        }
+      };
+
+      window.editAnimal = async function (id) {
+        try {
+          const r = await fetch("/api/animals/" + id);
+          if (!r.ok) { alert("Не знайдено тварину"); return; }
+          const a = await r.json();
+
+          const Name = prompt("Ім'я", a.Name) || a.Name;
+          const Species = prompt("Вид (Dog/Cat/Other)", a.Species) || a.Species;
+          const Age = prompt("Вік", a.Age || "") || a.Age;
+          const Breed = prompt("Порода", a.Breed || "") || a.Breed;
+          const Gender = prompt("Стать", a.Gender || "") || a.Gender;
+          const Description = prompt("Характер", a.Description || "") || a.Description;
+          const HealthStatus = prompt("Стан здоров'я", a.HealthStatus || "") || a.HealthStatus;
+          const ImageURL = prompt("ImageURL", a.ImageURL || "") || a.ImageURL;
+
+          const payload = { Name, Species, Age, Breed, Gender, Description, HealthStatus, ImageURL };
+          const res = await fetch("/api/animals/" + id, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            alert("Оновлено");
+            loadAnimals();
+          } else {
+            alert("Помилка оновлення");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Помилка при редагуванні");
+        }
+      };
+
+      window.markDone = async function (requestId) {
+        if (!confirm("Позначити заявку як оброблену?")) return;
+        try {
+          const res = await fetch("/api/adoption/" + requestId, { method: "PUT" });
+          if (res.ok) {
+            alert("Позначено як оброблену");
+            loadRequests();
+          } else {
+            alert("Помилка");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Помилка");
+        }
+      };
+
+      loadAnimals();
+      loadRequests();
+      loadSections();
+    });
+  </script>
+
+</body>
+</html>

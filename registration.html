@@ -9,43 +9,80 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <img src="images/logo.png" alt="logo" class="logo" width="3%" height="3%">
-        <input type="checkbox" id="menu-toggle" />
-        <label for="menu-toggle" class="burger">☰</label>
+<header>
+    <img src="images/logo.png" class="logo" width="3%" height="3%">
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="burger">☰</label>
 
+    <nav class="nav">
+        <ul>
+            <li><a href="index.html">На головну</a></li>
+        </ul>
+    </nav>
+</header>
 
-        <nav class="nav">
-            <ul>
-                <li><a href="index.html">На головну</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h2>Реєстрація</h2>
-        <form>
-            <p>Електронна пошта</p>
-            <input type="email" name="email">
-            <p>Ім'я користувача</p>
-            <input type="username" name="username">
-            <p>Пароль для подальшого ввходу</p>
-            <input type="password" name="password"><br>
-            <input type="submit" value="Підтвердити">
-        </form>
-    </main>
-    <footer>
-        <div class="contacts">
-            <h3>Контакти</h3>
-            <p>Контактні номери телефонів:<br>+380998853614<br>+380998853614<br>+380998853614</p><br>
-        </div>
+<main>
+    <h2>Реєстрація</h2>
 
-        <div class="location">
-            <h3>Розташування</h3>
-            <p>м. Київ <br>вул. Київська, 1, павільйон 6</p>
-            <a href="https://maps.app.goo.gl/zvjNdy5TPF6ixKUy7">
-                <img src="images/map.png" alt="map" width="345" height="210">
-            </a>
-        </div>
-    </footer>
+    <form id="registerForm">
+        <p>Електронна пошта</p>
+        <input type="email" name="email" required>
+
+        <p>Ім'я користувача</p>
+        <input type="text" name="username" required>
+
+        <p>Пароль для подальшого входу</p>
+        <input type="password" name="password" required><br>
+
+        <input type="submit" value="Підтвердити">
+    </form>
+
+    <p id="message" style="color:red; margin-top:10px;"></p>
+</main>
+
+<footer>
+    <div class="contacts">
+        <h3>Контакти</h3>
+        <p>Контактні номери телефонів:<br>+380998853614<br>+380998853614<br>+380998853614</p>
+    </div>
+
+    <div class="location">
+        <h3>Розташування</h3>
+        <p>м. Київ <br>вул. Київська, 1, павільйон 6</p>
+        <a href="https://maps.app.goo.gl/zvjNdy5TPF6ixKUy7">
+            <img src="images/map.png" width="345" height="210">
+        </a>
+    </div>
+</footer>
+
+<script>
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = {
+        email: form.email.value,
+        username: form.username.value,
+        password: form.password.value
+    };
+
+    const res = await fetch("http://localhost:3000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    document.getElementById("message").textContent = result.message;
+
+    if (res.ok) {
+        setTimeout(() => {
+            window.location.href = "enterform.html";
+        }, 1200);
+    }
+});
+</script>
+
 </body>
 </html>

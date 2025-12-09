@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Всиновлення</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Semi+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Semi+Condensed:wght@400;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <img src="images/logo.png" alt="logo" class="logo" width="3%" height="3%">
         <input type="checkbox" id="menu-toggle" />
         <label for="menu-toggle" class="burger">☰</label>
-
 
         <nav class="nav">
             <ul>
@@ -21,37 +23,40 @@
             </ul>
         </nav>
     </header>
+
     <main>
         <h2>Анкета для всиновлення</h2>
-        <form>
+
+        <form id="adoptForm">
+            <!-- Приховане поле для AnimalID -->
+            <input type="hidden" name="animalId" id="animalId">
+
             <p>ПІБ</p>
-            <input type="text" name="name">
+            <input type="text" name="name" required>
+
             <p>Дата народження</p>
-            <input type="date" name="birth date">
-            <p>Ім'я хвостика, якого плануєте всиновити</p>
-            <select name="pet name">
-                <option value="Mike">Майк</option>
-                <option value="Mila">Міла</option>
-                <option value="Ryzhyk">Рижик</option>
-                <option value="Snizhka">Сніжка</option>
-            </select>
+            <input type="date" name="birthDate" required>
+
             <p>Контактний номер телефону</p>
-            <input type="tel">
-            <p>Місто, в якому проживаєте</p>
-            <input type="text" name="city">
-            <p>Чи був у Вас раніше досвід догляду за тваринами?</p>
-            <label><input type="radio" name="expiriece" value="Yes">Так</label>
-            <label><input type="radio" name="expiriece" value="No">Ні</label>
-            <p>Скільки часу на день тварина проводитиме на самоті?</p>
-            <label><input type="radio" name="timealone" value="2">До 2 год</label><br>
-            <label><input type="radio" name="timealone" value="2-6">2-6 годин</label><br>
-            <label><input type="radio" name="timealone" value="6-10">6-10 годин</label><br>
-            <label><input type="radio" name="timealone" value="10+">Більше 10 годин</label><br><br>
-            <p>Після надсилання анкети очікуйте дзвінок від працівника притулку протягом 3 робочих днів.</p>
-            <p>Натискаючи кнопку "Надіслати" Ви погоджуєтесь на обробку ваших даних працівниками притулку.</p>
+            <input type="tel" name="phone" required>
+
+            <p>Місто</p>
+            <input type="text" name="city" required>
+
+            <p>Досвід?</p>
+            <label><input type="radio" name="experience" value="Yes">Так</label>
+            <label><input type="radio" name="experience" value="No">Ні</label>
+
+            <p>Час самотності</p>
+            <label><input type="radio" name="timeAlone" value="2">До 2 год</label>
+            <label><input type="radio" name="timeAlone" value="2-6">2-6 годин</label>
+            <label><input type="radio" name="timeAlone" value="6-10">6-10 годин</label>
+            <label><input type="radio" name="timeAlone" value="10+">10+ год</label>
+
             <input type="submit" value="Надіслати">
         </form>
     </main>
+
     <footer>
         <div class="contacts">
             <h3>Контакти</h3>
@@ -66,5 +71,61 @@
             </a>
         </div>
     </footer>
+
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const animalId = params.get("animalId");
+
+    if (!animalId) {
+        alert("Помилка: AnimalID не передано.");
+    }
+
+    document.getElementById("adoptForm").dataset.animalId = animalId;
+});
+
+document.getElementById("adoptForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const data = {
+        fullName: form.querySelector('input[name="name"]').value,
+        birthDate: form.querySelector('input[name="birthDate"]').value,
+        animalId: Number(form.dataset.animalId),
+        city: form.querySelector('input[name="city"]').value,
+        phone: form.querySelector('input[type="tel"]').value,
+        experience: form.querySelector('input[name="experience"]:checked')?.value || null,
+        timeAlone: form.querySelector('input[name="timeAlone"]:checked')?.value || null,
+    };
+
+    console.log("Sending:", data); // ДІАГНОСТИКА
+
+    try {
+        const response = await fetch("http://localhost:3000/api/adoption", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("Анкету надіслано успішно!");
+            form.reset();
+        } else {
+            alert("Помилка: " + result.message);
+        }
+
+    } catch (err) {
+        console.error("Помилка надсилання форми:", err);
+        alert("Сталася помилка. Спробуйте пізніше.");
+    }
+});
+</script>
+
+
 </body>
+
 </html>

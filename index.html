@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,6 @@
         <input type="checkbox" id="menu-toggle" />
         <label for="menu-toggle" class="burger">☰</label>
 
-
         <nav class="nav">
             <ul>
                 <li><a href="#A1">Наші хвостики</a></li>
@@ -25,8 +24,6 @@
             </ul>
         </nav>
     </header>
-
-
 
     <main>
     <section>
@@ -89,38 +86,42 @@
     </div>
     </section>
     
-    <section>
-        <h2 id="A2">Волонтерство</h2>
-    <p>Нам завжди потрібні руки та серця</p>
-    <ul>
-        <li>вигул тварин</li>
-        <li>прибирання вольєрів</li>
-        <li>транспортні перевезення</li>
-        <li>допомога на заходах</li>
-        <li>фото/відео/соцмережі</li>
-    </ul>
-    <p>Щоб стати волонтером зв’яжіться з нами за контактним номером телефону та дайте відповідь на декілька запитань: +3800336698542</p>
-    </section>
     
     <section>
+        <h2 id="A2">Волонтерство</h2>
+        <div id="volunteer-content">
+            <p>Нам завжди потрібні руки та серця</p>
+            <ul>
+                <li>вигул тварин</li>
+                <li>прибирання вольєрів</li>
+                <li>транспортні перевезення</li>
+                <li>допомога на заходах</li>
+                <li>фото/відео/соцмережі</li>
+            </ul>
+            <p>Щоб стати волонтером зв’яжіться з нами за контактним номером телефону та дайте відповідь на декілька запитань: +3800336698542</p>
+        </div>
+    </section>
+    <section>
         <h2 id="A3">Допомога</h2>
-    <p>Наш притулок існує завдяки людям, які не залишаються байдужими. Якщо ви хочете допомогти тваринам — навіть найменший внесок має велике значення!</p>
-    <h3>Реквізити для грошової допомоги</h3>
-    <ol>
-        <li>Банківська картка: 4441 1110 6985 3555</li>
-        <li>IBAN UA 01 111111 00000 1111 0000 2222 66</li>
-    </ol>
-    <h3>Матеріальна допомога</h3>
-    <h4>Можна передати:</h4>
-    <ul>
-        <li>сухий/вологий корм (для собак і котів)</li>
-        <li>пелюшки, миски, ліжка, амуніцію</li>
-        <li>ліки</li>
-        <li>будівельні матеріали для вольєрів</li>
-    </ul>
-    <p>📍 Ми приймаємо допомогу за адресою<br>
-    м. Київ, вул. Київська, 1, павільйон 6<br>
-    ⏰ Пн–Сб з 10:00 до 18:00</p>
+        <div id="help-content">
+            <p>Наш притулок існує завдяки людям, які не залишаються байдужими. Якщо ви хочете допомогти тваринам — навіть найменший внесок має велике значення!</p>
+            <h3>Реквізити для грошової допомоги</h3>
+            <ol>
+                <li>Банківська картка: 4441 1110 6985 3555</li>
+                <li>IBAN UA 01 111111 00000 1111 0000 2222 66</li>
+            </ol>
+            <h3>Матеріальна допомога</h3>
+            <h4>Можна передати:</h4>
+            <ul>
+                <li>сухий/вологий корм (для собак і котів)</li>
+                <li>пелюшки, миски, ліжка, амуніцію</li>
+                <li>ліки</li>
+                <li>будівельні матеріали для вольєрів</li>
+            </ul>
+            <p>📍 Ми приймаємо допомогу за адресою<br>
+            м. Київ, вул. Київська, 1, павільйон 6<br>
+            ⏰ Пн–Сб з 10:00 до 18:00</p>
+        </div>
     </section>
     </main>
     <footer>
@@ -137,6 +138,55 @@
             </a>
         </div>
     </footer>
-    <script src="js/script.js"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const volunteerEl = document.getElementById("volunteer-content");
+        const helpEl = document.getElementById("help-content");
+        const initialVolunteer = volunteerEl ? volunteerEl.innerHTML : "";
+        const initialHelp = helpEl ? helpEl.innerHTML : "";
+
+        try {
+            const res = await fetch("/api/sections");
+            if (!res.ok) {
+                console.warn("GET /api/sections returned", res.status);
+                return; 
+            }
+            const data = await res.json();
+
+            
+            let volunteerText = "";
+            let helpText = "";
+
+            if (data) {
+                if (data.volunteer && typeof data.volunteer.Content === "string") volunteerText = data.volunteer.Content;
+                if (data.help && typeof data.help.Content === "string") helpText = data.help.Content;
+
+                if (!volunteerText && typeof data.volunteer === "string") volunteerText = data.volunteer;
+                if (!helpText && typeof data.help === "string") helpText = data.help;
+
+                if (!volunteerText && (data["Волонтерство"] || data["волонтерство"])) volunteerText = data["Волонтерство"] || data["волонтерство"];
+                if (!helpText && (data["Допомога"] || data["допомога"])) helpText = data["Допомога"] || data["допомога"];
+            }
+
+            if (volunteerText && volunteerEl) {
+                volunteerEl.innerHTML = volunteerText;
+            } else if (volunteerEl) {
+                volunteerEl.innerHTML = initialVolunteer;
+            }
+
+            if (helpText && helpEl) {
+                helpEl.innerHTML = helpText;
+            } else if (helpEl) {
+                helpEl.innerHTML = initialHelp;
+            }
+
+        } catch (err) {
+            console.error("Помилка підвантаження секцій:", err);
+            if (volunteerEl) volunteerEl.innerHTML = initialVolunteer;
+            if (helpEl) helpEl.innerHTML = initialHelp;
+        }
+    });
+    </script>
 </body>
 </html>

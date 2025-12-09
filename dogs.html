@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,100 +9,112 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <img src="images/logo.png" alt="logo" class="logo" width="3%" height="3%">
-        <input type="checkbox" id="menu-toggle" />
-        <label for="menu-toggle" class="burger">☰</label>
 
+<header>
+    <img src="images/logo.png" alt="logo" class="logo" width="3%" height="3%">
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="burger">☰</label>
 
-        <nav class="nav">
-            <ul>
-                <li><a href="index.html">На головну</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h2 class="animaltitle">СОБАКИ</h2>
+    <nav class="nav">
+        <ul>
+            <li><a href="index.html">На головну</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <div class="animals">
-        <div class="animal">
-            <div>
-                <img src="images/mike.png" alt="Майк">
-                <p>МАЙК</p>
-            </div>
-            <div class="age">
-                <p>Вік: 3 роки</p><p>Порода: мальтіпу</p><p>Стать: хлопчик</p>
-            </div>
-            <div class="health">
-                <p>Характер: лагідний, дружелюбний, любить спілкування та активні прогулянки.</p><p>Здоров'я: Здоровий, всі щеплення в наявності, ветеринарний контроль пройдений</p>
-            </div>
-            <p class="like">Вподобати</p>
-            <a href="adoptform.html" class="adoptbutton">Всиновити</a>
-        </div>
+<main>
+    <h2 class="animaltitle">СОБАКИ</h2>
 
-        <div class="animal">
-            <div>
-                <img src="images/mila.png" alt="Міла">
-                <p>МІЛА</p>
-            </div>
-            <div class="age">
-                <p>Вік: 7 місяців</p><p>Порода: лабрадор</p><p>Стать: дівчинка</p>
-            </div>
-            <div class="health">
-                <p>Характер: активна, дружелюбна, любить спілкування та прогулянки.</p><p>Здоров'я: здорова, щеплена, під ветеринарним наглядом.</p>
-            </div>
-            <p class="like">Вподобати</p>
-            <a href="adoptform.html" class="adoptbutton">Всиновити</a>
-        </div>
+    <div id="dogs-container" class="animals"></div>
+
+</main>
+
+<footer>
+    <div class="contacts">
+        <h3>Контакти</h3>
+        <p>Контактні номери телефонів:<br>+380998853614<br>+380998853614<br>+380998853614</p><br>
     </div>
 
-    <div class="animals">
-        <div class="animal">
-            <div>
-                <img src="images/jessy.png" alt="Джессі">
-                <p>ДЖЕССІ</p>
-            </div>
-            <div class="age">
-                <p>Вік: 2,5 роки</p><p>Порода: лайка</p><p>Стать: дівчинка</p>
-            </div>
-            <div class="health">
-                <p>Характер: ніжна, лагідна, трохи боязка через досвід з попередніми господарями, не любить гучних звуків. Любить спокійне спілкування та прогулянки.</p><p>Здоров'я: Здорова, всі щеплення в наявності, ветеринарний контроль пройдений</p>
-            </div>
-            <p class="like">Вподобати</p>
-            <a href="adoptform.html" class="adoptbutton">Всиновити</a>
-        </div>
-
-        <div class="animal">
-            <div>
-                <img src="images/bubkyk.png" alt="Бублик">
-                <p>БУБЛИК</p>
-            </div>
-            <div class="age">
-                <p>Вік: 7 років </p><p>Порода: мопс</p><p>Стать: хлопчик</p>
-            </div>
-            <div class="health">
-                <p>Характер: життєрадісний, доброзичливий, ласкавий та розумний песик. Любить прогулянки на візочку, дружить з людьми, дітьми та іншими собаками.</p><p>Здоров'я: паралізовані задні лапи, але повністю адаптований до життя з візочком. Вакцинований, стерилізований, пройшов лікування і реабілітацію.</p>
-            </div>
-            <p class="like">Вподобати</p>
-            <a href="adoptform.html" class="adoptbutton">Всиновити</a>
-        </div>
+    <div class="location">
+        <h3>Розташування</h3>
+        <p>м. Київ <br>вул. Київська, 1, павільйон 6</p>
+        <a href="https://maps.app.goo.gl/zvjNdy5TPF6ixKUy7">
+            <img src="images/map.png" alt="map" width="345" height="210">
+        </a>
     </div>
+</footer>
 
+<script>
+document.addEventListener("DOMContentLoaded", loadDogs);
 
-    </main>
-    <footer>
-        <div class="contacts">
-            <h3>Контакти</h3>
-            <p>Контактні номери телефонів:<br>+380998853614<br>+380998853614<br>+380998853614</p><br>
-        </div>
+async function loadDogs() {
+    const container = document.getElementById("dogs-container");
 
-        <div class="location">
-            <h3>Розташування</h3>
-            <p>м. Київ <br>вул. Київська, 1, павільйон 6</p>
-            <a href="https://maps.app.goo.gl/zvjNdy5TPF6ixKUy7">
-                <img src="images/map.png" alt="map" width="345" height="210">
-            </a>
-        </div>
-    </footer>
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+        alert("Увійдіть у свій акаунт!");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:3000/api/animals/dogs");
+        const dogs = await response.json();
+
+        container.innerHTML = "";
+
+        dogs.forEach(dog => {
+            const card = document.createElement("div");
+            card.className = "animal";
+
+            card.innerHTML = `
+                <img src="${dog.ImageURL}" alt="${dog.Name}">
+                <p>${dog.Name}</p>
+                <p>Вік: ${dog.Age}</p>
+                <p>Порода: ${dog.Breed}</p>
+                <p>Стать: ${dog.Gender}</p>
+
+                <p class="like" data-id="${dog.AnimalID}">Вподобати</p>
+                <a href="adoptform.html?animalId=${animal.AnimalID}" class="adoptbutton">Всиновити</a>
+            `;
+
+            container.appendChild(card);
+        });
+
+        enableLikes();
+
+    } catch (err) {
+        console.error("Помилка завантаження собак:", err);
+        container.innerHTML = "<p>Не вдалось завантажити дані</p>";
+    }
+}
+
+function enableLikes() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user.UserID;
+
+    document.querySelectorAll(".like").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const animalId = btn.getAttribute("data-id");
+
+            const response = await fetch("http://localhost:3000/api/like", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId, animalId })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                btn.textContent = "Вподобано ❤️";
+                btn.style.color = "red";
+                btn.style.pointerEvents = "none";
+            } else {
+                alert(result.message);
+            }
+        });
+    });
+}
+</script>
+
 </body>
 </html>
